@@ -96,11 +96,25 @@ var config = {
     notify: false
 };
 
+/* Server Dev */
+var configDev = {
+  server: {
+      baseDir: './dev'
+  },
+  ghostMode: false, // By setting true, clicks, scrolls and form inputs on any device will be mirrored to all others
+  notify: false
+};
+
 /* Tasks */
 
 // Start the server
 gulp.task('webserver', function () {
     webserver(config);
+});
+
+// Start the server
+gulp.task('webserver:dev', function () {
+  webserver(configDev);
 });
 
 // Compile html
@@ -424,9 +438,30 @@ gulp.task('watch', function () {
     gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
 });
 
+// Launching tasks when files change
+gulp.task('watch:dev', function () {
+  gulp.watch(path.watch.html, gulp.series('html:dev'));
+  gulp.watch(path.watch.css, gulp.series('css:dev'));
+  gulp.watch(path.watch.fontcss, gulp.series('fontcss:dev'));
+  gulp.watch(path.watch.colorcss, gulp.series('colorcss:dev'));
+  gulp.watch(path.watch.vendorcss, gulp.series('vendorcss:dev'));
+  gulp.watch(path.watch.vendorjs, gulp.series('pluginsjs:dev'));
+  gulp.watch(path.watch.themejs, gulp.series('themejs:dev'));
+  gulp.watch(path.watch.img, gulp.series('image:dev'));
+  gulp.watch(path.watch.fonts, gulp.series('fonts:dev'));
+  gulp.watch(path.watch.media, gulp.series('media:dev'));
+  gulp.watch(path.watch.php, gulp.series('php:dev'));
+  gulp.watch(path.watch.user, gulp.series('colorcss:dev'));
+});
+
 // Serve
 gulp.task('serve', gulp.series(
     gulp.parallel('webserver','watch')
+));
+
+// Serve Dev
+gulp.task('serve:dev', gulp.series(
+  gulp.parallel('webserver:dev','watch:dev')
 ));
 
 // Dev
