@@ -22,3 +22,5 @@ dev/
 dist/
 
 archive/
+
+.publish
