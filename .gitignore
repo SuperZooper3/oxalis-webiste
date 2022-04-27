@@ -7,7 +7,13 @@ node_modules/
 
 **/.DS_Store
 
-*.png
+
+src/assets/img/avatars/
+src/assets/img/brands/
+src/assets/img/demos/
+src/assets/img/photos/
+src/assets/img/illustrations/
+
 *.jpg
 *.mp4
 
