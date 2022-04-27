@@ -105,7 +105,17 @@ var configDev = {
   notify: false
 };
 
+var deploy = require('gulp-gh-pages');
+
 /* Tasks */
+
+/**
+ * Push build to gh-pages
+ */
+ gulp.task('deploy', function () {
+  return gulp.src("./dist/**/*")
+    .pipe(deploy())
+});
 
 // Start the server
 gulp.task('webserver', function () {
