@@ -25,4 +25,5 @@ jobs:
     - name: Build
       run: |
         npm install
+        gulp build:dist
         gulp deploy
