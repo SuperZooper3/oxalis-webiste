@@ -64,48 +64,48 @@ var path = {
 
 /* Include gulp and plugins */
 var gulp = require('gulp'),
-    webserver = require('browser-sync'),
-    reload = webserver.reload,
-    plumber = require('gulp-plumber'),
-    sourcemaps = require('gulp-sourcemaps'),
-    sass = require('gulp-sass')(require('sass')),
-    sassUnicode = require('gulp-sass-unicode'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cleanCSS = require('gulp-clean-css'),
-    uglify = require('gulp-uglify'),
-    cache = require('gulp-cache'),
-    imagemin = require('gulp-imagemin'),
-    jpegrecompress = require('imagemin-jpeg-recompress'),
-    pngquant = require('imagemin-pngquant'),
-    del = require('del'),
-    fileinclude = require('gulp-file-include'),
-    beautify = require('gulp-beautify'),
-    minify = require('gulp-minify'),
-    concat = require('gulp-concat'),
-    jsImport = require('gulp-js-import'),
-    newer = require('gulp-newer'),
-    replace = require('gulp-replace'),
-    touch = require('gulp-touch-cmd');
-    
+  webserver = require('browser-sync'),
+  reload = webserver.reload,
+  plumber = require('gulp-plumber'),
+  sourcemaps = require('gulp-sourcemaps'),
+  sass = require('gulp-sass')(require('sass')),
+  sassUnicode = require('gulp-sass-unicode'),
+  autoprefixer = require('gulp-autoprefixer'),
+  cleanCSS = require('gulp-clean-css'),
+  uglify = require('gulp-uglify'),
+  cache = require('gulp-cache'),
+  imagemin = require('gulp-imagemin'),
+  jpegrecompress = require('imagemin-jpeg-recompress'),
+  pngquant = require('imagemin-pngquant'),
+  del = require('del'),
+  fileinclude = require('gulp-file-include'),
+  beautify = require('gulp-beautify'),
+  minify = require('gulp-minify'),
+  concat = require('gulp-concat'),
+  jsImport = require('gulp-js-import'),
+  newer = require('gulp-newer'),
+  replace = require('gulp-replace'),
+  touch = require('gulp-touch-cmd');
+
 /* Server */
 var config = {
-    server: {
-        baseDir: './dist'
-    },
-    ghostMode: false, // By setting true, clicks, scrolls and form inputs on any device will be mirrored to all others
-    notify: false
-};
-
-/* Server Dev */
-var configDev = {
   server: {
-      baseDir: './dev'
+    baseDir: './dist'
   },
   ghostMode: false, // By setting true, clicks, scrolls and form inputs on any device will be mirrored to all others
   notify: false
 };
 
-var deploy = require('gulp-gh-pages');
+/* Server Dev */
+var configDev = {
+  server: {
+    baseDir: './dev'
+  },
+  ghostMode: false, // By setting true, clicks, scrolls and form inputs on any device will be mirrored to all others
+  notify: false
+};
+
+var deploy = require('gulp4-gh-pages');
 
 /* Tasks */
 
@@ -114,12 +114,15 @@ var deploy = require('gulp-gh-pages');
  */
 gulp.task('deploy', function () {
   return gulp.src("./dist/**/*")
-    .pipe(deploy())
+    .pipe(deploy({
+      remoteUrl: "https://github.com/SuperZooper3/oxalis-webiste.git",
+      branch: "gh-pages"
+    }));
 });
 
 // Start the server
 gulp.task('webserver', function () {
-    webserver(config);
+  webserver(config);
 });
 
 // Start the server
@@ -285,22 +288,22 @@ gulp.task('vendorcss:dist', function () {
 });
 
 // Compile vendor plugins js
-gulp.task('pluginsjs:dev', function() {
-    return gulp.src([
-      'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-      path.src.vendorjs
-    ])
-    .pipe(jsImport({hideConsole: true}))
+gulp.task('pluginsjs:dev', function () {
+  return gulp.src([
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+    path.src.vendorjs
+  ])
+    .pipe(jsImport({ hideConsole: true }))
     .pipe(concat('plugins.js'))
     .pipe(gulp.dest(path.dev.js))
     .pipe(touch())
 });
-gulp.task('pluginsjs:dist', function() {
-    return gulp.src([
-      'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-      path.src.vendorjs
-    ])
-    .pipe(jsImport({hideConsole: true}))
+gulp.task('pluginsjs:dist', function () {
+  return gulp.src([
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+    path.src.vendorjs
+  ])
+    .pipe(jsImport({ hideConsole: true }))
     .pipe(concat('plugins.js'))
     .pipe(uglify())
     .pipe(gulp.dest(path.dist.js))
@@ -375,7 +378,7 @@ gulp.task('image:dist', function () {
       }),
       pngquant(),
       imagemin.svgo({ plugins: [{ removeViewBox: false }] })
-        ])))
+    ])))
     .pipe(gulp.dest(path.dist.img))
     .on('end', () => { reload(); });
 });
@@ -390,13 +393,13 @@ gulp.task('clean:dist', function () {
 
 // Clear cache
 gulp.task('cache:clear', function () {
-    cache.clearAll();
+  cache.clearAll();
 });
 
 // Assembly Dev
 gulp.task('build:dev',
-    gulp.series('clean:dev',
-      gulp.parallel(
+  gulp.series('clean:dev',
+    gulp.parallel(
       'html:dev',
       'css:dev',
       'fontcss:dev',
@@ -408,14 +411,14 @@ gulp.task('build:dev',
       'media:dev',
       'php:dev',
       'image:dev'
-      )
     )
+  )
 );
 
 // Assembly Dist
 gulp.task('build:dist',
-    gulp.series('clean:dist',
-      gulp.parallel(
+  gulp.series('clean:dist',
+    gulp.parallel(
       'html:dist',
       'css:dist',
       'fontcss:dist',
@@ -427,25 +430,25 @@ gulp.task('build:dist',
       'media:dist',
       'php:dist',
       'image:dist'
-      )
     )
+  )
 );
 
 
 // Launching tasks when files change
 gulp.task('watch', function () {
-    gulp.watch(path.watch.html, gulp.series('html:dist'));
-    gulp.watch(path.watch.css, gulp.series('css:dist'));
-    gulp.watch(path.watch.fontcss, gulp.series('fontcss:dist'));
-    gulp.watch(path.watch.colorcss, gulp.series('colorcss:dist'));
-    gulp.watch(path.watch.vendorcss, gulp.series('vendorcss:dist'));
-    gulp.watch(path.watch.vendorjs, gulp.series('pluginsjs:dist'));
-    gulp.watch(path.watch.themejs, gulp.series('themejs:dist'));
-    gulp.watch(path.watch.img, gulp.series('image:dist'));
-    gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
-    gulp.watch(path.watch.media, gulp.series('media:dist'));
-    gulp.watch(path.watch.php, gulp.series('php:dist'));
-    gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
+  gulp.watch(path.watch.html, gulp.series('html:dist'));
+  gulp.watch(path.watch.css, gulp.series('css:dist'));
+  gulp.watch(path.watch.fontcss, gulp.series('fontcss:dist'));
+  gulp.watch(path.watch.colorcss, gulp.series('colorcss:dist'));
+  gulp.watch(path.watch.vendorcss, gulp.series('vendorcss:dist'));
+  gulp.watch(path.watch.vendorjs, gulp.series('pluginsjs:dist'));
+  gulp.watch(path.watch.themejs, gulp.series('themejs:dist'));
+  gulp.watch(path.watch.img, gulp.series('image:dist'));
+  gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
+  gulp.watch(path.watch.media, gulp.series('media:dist'));
+  gulp.watch(path.watch.php, gulp.series('php:dist'));
+  gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
 });
 
 // Launching tasks when files change
@@ -466,26 +469,26 @@ gulp.task('watch:dev', function () {
 
 // Serve
 gulp.task('serve', gulp.series(
-    gulp.parallel('webserver','watch')
+  gulp.parallel('webserver', 'watch')
 ));
 
 // Serve Dev
 gulp.task('serve:dev', gulp.series(
-  gulp.parallel('webserver:dev','watch:dev')
+  gulp.parallel('webserver:dev', 'watch:dev')
 ));
 
 // Dev
 gulp.task('build:dev', gulp.series(
-    'build:dev'
+  'build:dev'
 ));
 
 // Dist
 gulp.task('build:dist', gulp.series(
-    'build:dist'
+  'build:dist'
 ));
 
 // Default tasks
 gulp.task('default', gulp.series(
-    'build:dist',
-    gulp.parallel('webserver','watch')
+  'build:dist',
+  gulp.parallel('webserver', 'watch')
 ));
