@@ -18,8 +18,10 @@ src/assets/img/illustrations/
 *.mp4
 
 # Compiled versions
-dev/
-dist/
+dev/*
+dist/*
+
+!dist/CNAME
 
 archive/
 
