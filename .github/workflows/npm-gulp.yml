@@ -26,6 +26,7 @@ jobs:
       run: |
         npm install
         gulp build:dist
+        cp CNAME dist/CNAME
     
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3

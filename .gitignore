@@ -21,8 +21,6 @@ src/assets/img/illustrations/
 dev/*
 dist/*
 
-!dist/CNAME
-
 archive/
 
 .publish
