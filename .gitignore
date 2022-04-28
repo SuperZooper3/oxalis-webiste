@@ -13,8 +13,10 @@ src/assets/img/brands/
 src/assets/img/demos/
 src/assets/img/photos/
 src/assets/img/illustrations/
+src/assets/img/docs/
+src/assets/img/demos/
+src/assets/img/icons/
 
-*.jpg
 *.mp4
 
 # Compiled versions
