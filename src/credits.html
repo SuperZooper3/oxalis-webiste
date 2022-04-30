@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	@@include('_head.html')
+</head>
+<body>
+	<div class="content-wrapper">
+		<header class="wrapper bg-light">
+			@@include('_navbar.html', {
+				"classList": "classic transparent navbar-light",
+				"logoAlt": "oxalisFlatNameB",
+				"otherClassList": "ms-lg-4",
+				"otherBtn": true,
+				"otherBtnClassList": "btn-sm btn-primary rounded-pill",
+				"otherBtnText": "About the Tech",
+				"otherBtnLink": "@@webRoot/tech.html"
+				})
+		</header>
+		<!-- /header -->
+		<section class="wrapper image-wrapper bg-image bg-overlay bg-overlay-400 text-white" data-image-src="@@webRoot/assets/img/images/bg2.jpg">
+			<div class="container pt-17 pb-20 pt-md-19 pb-md-21 text-center">
+				<div class="row">
+					<div class="col-lg-8 mx-auto">
+						<h1 class="display-1 mb-3 text-white">Credits</h1>
+						<p class="lead fs-lg pe-lg-15 pe-xxl-12">Credits and attribution for all resources used.</p>
+						<!-- /nav -->
+					</div>
+					<!-- /column -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container -->
+		</section>	
+		<!-- /section -->
+		<section class="wrapper bg-light angled upper-end">
+            <div class="container py-14 py-md-16">
+                <h3>Landing page:</h3>
+                <a href="https://undraw.co/illustrations" title="people icons">unDraw for illustrations</a>
+            </div>
+        </section>
+        <!-- /section -->
+	</div>
+	<!-- /.content-wrapper -->
+	<footer class="bg-dark text-inverse">
+		<div class="container py-13 py-md-15">
+			@@include('_footer6-widgets.html', {
+				"lightText": true
+				})
+		</div>
+		<!-- /.container -->
+	</footer>
+	@@include('_page-progress.html')
+	@@include('_scripts.html')
+</body>
+</html>
