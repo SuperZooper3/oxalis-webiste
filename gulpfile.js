@@ -482,6 +482,11 @@ gulp.task('build:dev', gulp.series(
   'build:dev'
 ));
 
+// Dev
+gulp.task('build:dev:img', gulp.series(
+  'image:dev'
+));
+
 // Dist
 gulp.task('build:dist', gulp.series(
   'build:dist'
